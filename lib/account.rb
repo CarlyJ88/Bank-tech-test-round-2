@@ -28,8 +28,4 @@ class Account
     @transaction.unshift(withdraw)
     withdraw
   end
-
-  def transaction
-    @transaction
-  end
 end
