@@ -7,7 +7,13 @@ class Account
 
   def statement
      header = "date || credit || debit || balance\n"
-     body = @transaction.map { |print_item| "#{print_item[:date].strftime("%d/%m/%Y")} || #{'%.2f' % print_item[:deposit]} || || #{'%.2f' % print_item[:balance]}\n" }.join
+     body = @transaction.map do |print_item| 
+      "#{print_item[:date].strftime("%d/%m/%Y")} ||" +
+      " #{ print_item[:deposit] == nil ? "" : '%.2f ' % print_item[:deposit] }||" +
+      " #{ print_item[:withdraw] == nil ? "" : '%.2f ' % print_item[:withdraw] }||" +
+      " #{'%.2f' % print_item[:balance]}\n" 
+     end
+     .join
      header + body 
   end
 
@@ -15,6 +21,12 @@ class Account
     deposit = { date: Date.today, deposit: value, balance: @balance += value }
     @transaction.unshift(deposit)
     deposit
+  end
+
+  def withdraw(value)
+    withdraw = { date: Date.today, withdraw: value, balance: @balance -= value }
+    @transaction.unshift(withdraw)
+    withdraw
   end
 
   def transaction
