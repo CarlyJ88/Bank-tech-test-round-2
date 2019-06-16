@@ -8,8 +8,8 @@ class Account
   end
 
   def statement
-    statement = Statement.new(@transaction)
-    statement.print_statement
+    statement = Statement.new
+    statement.print_statement(@transaction)
   end
 
   def deposit(value)
